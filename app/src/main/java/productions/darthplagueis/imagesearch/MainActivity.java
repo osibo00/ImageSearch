@@ -1,88 +1,103 @@
 package productions.darthplagueis.imagesearch;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.support.v7.widget.Toolbar;
 
 import java.util.List;
 
 import productions.darthplagueis.imagesearch.controller.PhotoHitsAdapter;
+import productions.darthplagueis.imagesearch.fragment.FragmentListener;
 import productions.darthplagueis.imagesearch.fragment.LoadingFragment;
 import productions.darthplagueis.imagesearch.fragment.PhotoHitsFragment;
+import productions.darthplagueis.imagesearch.fragment.SearchFragment;
 import productions.darthplagueis.imagesearch.pixabay.retrofit.PixabayGetter;
 import productions.darthplagueis.imagesearch.pixabay.retrofit.PixabayRetrofit;
 import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoHits;
 import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoResults;
-import productions.darthplagueis.imagesearch.util.DataProvider;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentListener {
 
+    public static final String API_KEY = BuildConfig.API_KEY;
     private final String TAG = "Main Activity";
-    private static final String API_KEY = BuildConfig.API_KEY;
-    private PixabayGetter pixabayGetter;
-    private String queryString = "";
-
+    private static Toolbar toolbar;
+    private FragmentManager fragmentManager;
+    private PixabayGetter getter;
+    private String queryString;
+    private static PhotoHitsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final FrameLayout frameLayout = findViewById(R.id.fragment_container);
-        final LinearLayout linearLayout = findViewById(R.id.layout_container);
-        final EditText queryText = findViewById(R.id.query_text);
+        toolbar = findViewById(R.id.main_toolbar);
+        fragmentManager = getSupportFragmentManager();
+        inflateSearchFragment();
 
-        findViewById(R.id.query_search_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String searchString = queryText.getText().toString();
-                String[] splitter = searchString.split(" ");
-                for (int i = 0; i < splitter.length; i++) {
-                    queryString += splitter[i] + "+";
-                }
-                getPhotoHits(queryString);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.add(R.id.fragment_container, new LoadingFragment());
-                fragmentTransaction.commit();
+        setRetrofit();
 
-                linearLayout.setVisibility(View.GONE);
-                frameLayout.setVisibility(View.VISIBLE);
-            }
-        });
-
-        PixabayRetrofit pr = PixabayRetrofit.getInstanceOfRetrofit();
-        pixabayGetter = pr.pixabayGetter();
-
+        adapter = new PhotoHitsAdapter();
 
     }
 
+    private void inflateSearchFragment() {
+        toolbar.setTitle("Search");
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        SearchFragment fragment = (SearchFragment) fragmentManager.findFragmentByTag("searchFrag");
+        if (fragment == null) {
+            transaction.replace(R.id.fragment_container, new SearchFragment(), "searchFrag");
+        } else {
+            transaction.replace(R.id.fragment_container, fragment, "searchFrag");
+        }
+        transaction.addToBackStack("search");
+        transaction.commit();
+    }
+
+    private void setRetrofit() {
+        PixabayRetrofit pixabayRetrofit = PixabayRetrofit.getInstanceOfRetrofit();
+        getter = pixabayRetrofit.pixabayGetter();
+    }
+
+
+    @Override
+    public void inflateLoadingFragment() {
+        toolbar.setTitle(queryString);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        LoadingFragment fragment = (LoadingFragment) fragmentManager.findFragmentByTag("loadingFrag");
+        if (fragment == null) {
+            transaction.replace(R.id.fragment_container, new LoadingFragment(), "loadingFrag");
+        } else {
+            transaction.replace(R.id.fragment_container, fragment, "loadingFrag");
+        }
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void defineSearchQuery(String query) {
+        queryString = query;
+        getPhotoHits(queryString);
+    }
+
     private void getPhotoHits(String query) {
-        Call<PhotoResults> call = pixabayGetter.getPhotoResults(API_KEY, query, "photo");
+        Call<PhotoResults> call = getter.getPhotoResults(API_KEY, query, "photo");
         call.enqueue(new Callback<PhotoResults>() {
             @Override
             public void onResponse(Call<PhotoResults> call, Response<PhotoResults> response) {
                 if (response.isSuccessful()) {
-                    queryString = "";
                     PhotoResults photoResults = response.body();
                     List<PhotoHits> photoHits = photoResults.getHits();
-                    DataProvider.addPhotoHits(photoHits);
-                    Log.d(TAG, "onResponse: photoHits returned " + photoHits.size());
-
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, new PhotoHitsFragment()).addToBackStack("photos");
-                    fragmentTransaction.commit();
+                    adapter.clearList();
+                    adapter.createList(photoHits);
+                    inflateResultsFragment();
+                    Log.d(TAG, "onResponse photoHits returned: " + photoHits.size());
                 }
             }
 
@@ -92,5 +107,59 @@ public class MainActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void inflateResultsFragment() {
+        fragmentManager.popBackStack();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        PhotoHitsFragment fragment = (PhotoHitsFragment) fragmentManager.findFragmentByTag("hitsFrag");
+        if (fragment == null) {
+            transaction.replace(R.id.fragment_container, new PhotoHitsFragment(), "hitsFrag");
+        } else {
+            transaction.replace(R.id.fragment_container, fragment, "hitsFrag");
+        }
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void pageListener(int page) {
+        loadMorePhotoHits(page);
+    }
+
+    private void loadMorePhotoHits(int page) {
+        Call<PhotoResults> call = getter.getAllResults(API_KEY, queryString, "photo", page, 25);
+        call.enqueue(new Callback<PhotoResults>() {
+            @Override
+            public void onResponse(Call<PhotoResults> call, Response<PhotoResults> response) {
+                if (response.isSuccessful()) {
+                    PhotoResults photoResults = response.body();
+                    List<PhotoHits> photoHits = photoResults.getHits();
+                    adapter.updateList(photoHits);
+                    Log.d(TAG, "onResponse more photoHits returned: " + photoHits.size());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PhotoResults> call, Throwable t) {
+                call.clone();
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public static PhotoHitsAdapter getAdapter() {
+        return adapter;
+    }
+
+    public static Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        toolbar.setTitle("Search");
+        return true;
     }
 }

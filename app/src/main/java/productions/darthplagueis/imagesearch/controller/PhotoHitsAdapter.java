@@ -17,6 +17,7 @@ import productions.darthplagueis.imagesearch.view.PhotoHitsViewHolder;
  */
 
 public class PhotoHitsAdapter extends RecyclerView.Adapter<PhotoHitsViewHolder> {
+
     private List<PhotoHits> photoHitsList;
 
     public PhotoHitsAdapter() {
@@ -46,5 +47,9 @@ public class PhotoHitsAdapter extends RecyclerView.Adapter<PhotoHitsViewHolder> 
     public void updateList(List<PhotoHits> newList) {
         photoHitsList.addAll(newList);
         notifyItemRangeInserted(getItemCount(), photoHitsList.size() - 1);
+    }
+
+    public void clearList() {
+        photoHitsList.clear();
     }
 }
