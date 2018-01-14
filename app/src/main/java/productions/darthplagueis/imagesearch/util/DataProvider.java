@@ -23,4 +23,8 @@ public class DataProvider {
         Log.d(TAG, "photoHitsList size: " + photoHitsList.size());
         return photoHitsList;
     }
+
+    public static void clearList() {
+        photoHitsList = new ArrayList<>();
+    }
 }
