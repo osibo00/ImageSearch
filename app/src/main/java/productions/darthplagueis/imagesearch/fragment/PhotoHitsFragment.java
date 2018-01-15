@@ -58,7 +58,7 @@ public class PhotoHitsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_photo_hits, container, false);
-        //setToolbar();
+
         ((AppCompatActivity) getActivity()).setSupportActionBar(MainActivity.getToolbar());
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -97,11 +97,4 @@ public class PhotoHitsFragment extends Fragment {
 
         return rootView;
     }
-
-//    private void setToolbar() {
-//        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.photohits_toolbar);
-//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-//    }
 }

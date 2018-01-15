@@ -77,10 +77,11 @@ public class SearchFragment extends Fragment {
                 String[] splitter = searchString.split(" "); // Separates searchString by spaces between words into distinct keywords.
                 if (splitter.length > 1) {
                     for (int i = 0; i < splitter.length; i++) {
-                        if (i == splitter.length - 1) {
+                        if (i == splitter.length -1) {
                             queryString += splitter[i];
+                        } else {
+                            queryString += splitter[i] + "+";
                         }
-                        queryString += splitter[i] + "+";
                     }
                 } else {
                     queryString = splitter[0];
