@@ -16,6 +16,7 @@ import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoHits;
  */
 
 public class PhotoHitsViewHolder extends RecyclerView.ViewHolder {
+
     private Context context;
     private ImageView imageView;
 

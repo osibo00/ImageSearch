@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_grey"
     tools:context="productions.darthplagueis.imagesearch.MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -22,12 +23,22 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignBottom="@id/main_progressbar"
         android:layout_below="@+id/main_toolbar">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/small_fragment_container"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_centerInParent="true">
 
     </FrameLayout>
 
     <ProgressBar
         android:id="@+id/main_progressbar"
+        style="@style/MyProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
