@@ -11,12 +11,11 @@ import android.view.ViewGroup;
 import productions.darthplagueis.imagesearch.MainActivity;
 import productions.darthplagueis.imagesearch.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class LoadingFragment extends Fragment {
 
-    public LoadingFragment() {}
+    public LoadingFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

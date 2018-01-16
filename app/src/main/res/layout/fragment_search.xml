@@ -8,17 +8,88 @@
 
     <EditText
         android:id="@+id/query_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="100dp"
-        android:hint="Search for images" />
+        android:background="@color/white"
+        android:hint="@string/search_images"
+        android:padding="10dp"
+        android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/query_search_btn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Search" />
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/see"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+
+        <productions.darthplagueis.imagesearch.util.CustomSpinner
+            android:id="@+id/spinner"
+            style="@style/Widget.AppCompat.Spinner"
+            android:layout_width="150dp"
+            android:layout_height="?attr/dropdownListPreferredItemHeight"
+            android:layout_margin="10dp"
+            android:background="@drawable/spinner_bg"
+            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+            android:dropDownWidth="150dp"
+            android:paddingRight="14dp"
+            android:popupBackground="@color/colorPrimaryDark"
+            android:popupElevation="3dp"
+            android:stateListAnimator="@drawable/spinner_sla">
+
+        </productions.darthplagueis.imagesearch.util.CustomSpinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/images"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp">
+
+        <Button
+            android:id="@+id/adv_search_frag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margins"
+            android:layout_weight=".25"
+            android:background="@color/colorPrimaryDark"
+            android:padding="2dp"
+            android:text="@string/adv_search"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/query_search_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".75"
+            android:background="@color/colorAccent"
+            android:text="@string/search"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 
 </LinearLayout>
