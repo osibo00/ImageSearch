@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_grey"
     android:orientation="vertical"
     tools:context="productions.darthplagueis.imagesearch.fragment.SearchFragment">
 
@@ -15,6 +16,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="100dp"
         android:background="@color/white"
+        android:elevation="6dp"
         android:hint="@string/search_images"
         android:padding="10dp"
         android:textSize="30sp" />

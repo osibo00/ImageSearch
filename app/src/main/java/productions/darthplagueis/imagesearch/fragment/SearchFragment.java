@@ -13,14 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
-import productions.darthplagueis.imagesearch.MainActivity;
 import productions.darthplagueis.imagesearch.R;
 import productions.darthplagueis.imagesearch.util.CustomSpinner;
 
 
 public class SearchFragment extends Fragment {
 
-    FragmentListener listener;
+    SearchFragListener listener;
     private final String TAG = "Search Fragment";
     private EditText searchEditText;
     private CustomSpinner spinner;
@@ -38,7 +37,6 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
 
-        ((AppCompatActivity) getActivity()).setSupportActionBar(MainActivity.getToolbar());
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
 
@@ -46,10 +44,10 @@ public class SearchFragment extends Fragment {
         spinner = rootView.findViewById(R.id.spinner);
         searchButton = rootView.findViewById(R.id.query_search_btn);
         advSearchFrag = rootView.findViewById(R.id.adv_search_frag);
-        
+
         setImageTypeSpinner();
         setSearchButton();
-        setAdvSearchFrag();
+        inflateAdvSearchFrag();
 
         return rootView;
     }
@@ -59,9 +57,9 @@ public class SearchFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            listener = (FragmentListener) context;
+            listener = (SearchFragListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement FragmentListener");
+            throw new ClassCastException(context.toString() + " must implement FragListener");
         }
     }
 
@@ -119,7 +117,7 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    private void setAdvSearchFrag() {
+    private void inflateAdvSearchFrag() {
         advSearchFrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,6 +1,7 @@
 package productions.darthplagueis.imagesearch.controller;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,20 @@ import productions.darthplagueis.imagesearch.view.PhotoHitsViewHolder;
 
 public class PhotoHitsAdapter extends RecyclerView.Adapter<PhotoHitsViewHolder> {
 
+    private static PhotoHitsAdapter instanceOfAdapter;
+
     private List<PhotoHits> photoHitsList;
 
-    public PhotoHitsAdapter() {
+    private PhotoHitsAdapter() {
         photoHitsList = new ArrayList<>();
+    }
+
+    public static PhotoHitsAdapter getInstanceOfAdapter() {
+        if (instanceOfAdapter != null) {
+            return instanceOfAdapter;
+        }
+        instanceOfAdapter = new PhotoHitsAdapter();
+        return instanceOfAdapter;
     }
 
     @Override

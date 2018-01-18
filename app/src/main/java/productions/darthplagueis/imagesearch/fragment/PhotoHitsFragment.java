@@ -11,14 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import productions.darthplagueis.imagesearch.MainActivity;
 import productions.darthplagueis.imagesearch.R;
+import productions.darthplagueis.imagesearch.ResultsActivity;
+import productions.darthplagueis.imagesearch.controller.PhotoHitsAdapter;
 import productions.darthplagueis.imagesearch.util.InsetDecoration;
 
 
 public class PhotoHitsFragment extends Fragment {
 
-    FragmentListener listener;
+    ResultsFragListener listener;
     private final String TAG = "Photo Hits Fragment";
 
     public PhotoHitsFragment() {
@@ -29,9 +30,9 @@ public class PhotoHitsFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            listener = (FragmentListener) context;
+            listener = (ResultsFragListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement FragmentListener");
+            throw new ClassCastException(context.toString() + " must implement FragListener");
         }
     }
 
@@ -40,21 +41,21 @@ public class PhotoHitsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_photo_hits, container, false);
 
-        ((AppCompatActivity) getActivity()).setSupportActionBar(MainActivity.getToolbar());
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         RecyclerView recyclerView = rootView.findViewById(R.id.recycler_view);
 
-        recyclerView.setAdapter(MainActivity.getAdapter());
+        PhotoHitsAdapter adapter = PhotoHitsAdapter.getInstanceOfAdapter();
+        recyclerView.setAdapter(adapter);
 
         GridLayoutManager layoutManager = new GridLayoutManager(rootView.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.addItemDecoration(new InsetDecoration(rootView.getContext()));
 
-        listener.getLayoutManager(layoutManager);
-        recyclerView.addOnScrollListener(MainActivity.getScrollListener());
+        listener.setScrollListener(layoutManager);
+        recyclerView.addOnScrollListener(ResultsActivity.getScrollListener());
 
         return rootView;
     }

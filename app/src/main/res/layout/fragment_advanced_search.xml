@@ -2,122 +2,131 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
-    android:gravity="center"
-    android:orientation="vertical"
+    android:background="@color/grey_transparent"
+    android:gravity="center_horizontal"
     tools:context="productions.darthplagueis.imagesearch.fragment.AdvancedSearchFragment">
 
-    <EditText
-        android:id="@+id/adv_query_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:hint="@string/search_images"
-        android:padding="10dp"
-        android:textSize="20sp" />
-
     <LinearLayout
-        android:id="@+id/layout_row01"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp">
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_marginTop="75dp"
+        android:background="@color/colorAccent"
+        android:elevation="8dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/adv_query_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:elevation="4dp"
+            android:hint="@string/search_images"
+            android:padding="10dp"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/layout_row01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
 
 
-        <productions.darthplagueis.imagesearch.util.CustomSpinner
-            android:id="@+id/spinner_imagetype"
-            style="@style/Widget.AppCompat.Spinner"
-            android:layout_width="125dp"
-            android:layout_height="?attr/dropdownListPreferredItemHeight"
-            android:layout_margin="10dp"
-            android:background="@drawable/spinner_bg"
-            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-            android:dropDownWidth="150dp"
-            android:paddingRight="14dp"
-            android:popupBackground="@color/colorPrimaryDark"
-            android:popupElevation="3dp"
-            android:stateListAnimator="@drawable/spinner_sla">
+            <productions.darthplagueis.imagesearch.util.CustomSpinner
+                android:id="@+id/spinner_imagetype"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="125dp"
+                android:layout_height="?attr/dropdownListPreferredItemHeight"
+                android:layout_margin="10dp"
+                android:background="@drawable/spinner_bg"
+                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+                android:dropDownWidth="150dp"
+                android:paddingRight="14dp"
+                android:popupBackground="@color/colorPrimaryDark"
+                android:popupElevation="3dp"
+                android:stateListAnimator="@drawable/spinner_sla">
 
-        </productions.darthplagueis.imagesearch.util.CustomSpinner>
+            </productions.darthplagueis.imagesearch.util.CustomSpinner>
 
-        <productions.darthplagueis.imagesearch.util.CustomSpinner
-            android:id="@+id/spinner_category"
-            style="@style/Widget.AppCompat.Spinner"
-            android:layout_width="125dp"
-            android:layout_height="?attr/dropdownListPreferredItemHeight"
-            android:layout_margin="10dp"
-            android:background="@drawable/spinner_bg"
-            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-            android:dropDownWidth="150dp"
-            android:paddingRight="14dp"
-            android:popupBackground="@color/colorPrimaryDark"
-            android:popupElevation="3dp"
-            android:stateListAnimator="@drawable/spinner_sla">
+            <productions.darthplagueis.imagesearch.util.CustomSpinner
+                android:id="@+id/spinner_category"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="125dp"
+                android:layout_height="?attr/dropdownListPreferredItemHeight"
+                android:layout_margin="10dp"
+                android:background="@drawable/spinner_bg"
+                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+                android:dropDownWidth="150dp"
+                android:paddingRight="14dp"
+                android:popupBackground="@color/colorPrimaryDark"
+                android:popupElevation="3dp"
+                android:stateListAnimator="@drawable/spinner_sla">
 
-        </productions.darthplagueis.imagesearch.util.CustomSpinner>
+            </productions.darthplagueis.imagesearch.util.CustomSpinner>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_row02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
+
+
+            <productions.darthplagueis.imagesearch.util.CustomSpinner
+                android:id="@+id/spinner_editors_choice"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="125dp"
+                android:layout_height="?attr/dropdownListPreferredItemHeight"
+                android:layout_margin="10dp"
+                android:background="@drawable/spinner_bg"
+                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+                android:dropDownWidth="150dp"
+                android:paddingRight="14dp"
+                android:popupBackground="@color/colorPrimaryDark"
+                android:popupElevation="3dp"
+                android:stateListAnimator="@drawable/spinner_sla">
+
+            </productions.darthplagueis.imagesearch.util.CustomSpinner>
+
+            <productions.darthplagueis.imagesearch.util.CustomSpinner
+                android:id="@+id/spinner_order"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="125dp"
+                android:layout_height="?attr/dropdownListPreferredItemHeight"
+                android:layout_margin="10dp"
+                android:background="@drawable/spinner_bg"
+                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+                android:dropDownWidth="150dp"
+                android:paddingRight="14dp"
+                android:popupBackground="@color/colorPrimaryDark"
+                android:popupElevation="3dp"
+                android:stateListAnimator="@drawable/spinner_sla">
+
+            </productions.darthplagueis.imagesearch.util.CustomSpinner>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/adv_search_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="80dp"
+            android:layout_marginStart="80dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/search"
+            android:textColor="@color/white" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_row02"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp">
-
-
-        <productions.darthplagueis.imagesearch.util.CustomSpinner
-            android:id="@+id/spinner_editors_choice"
-            style="@style/Widget.AppCompat.Spinner"
-            android:layout_width="125dp"
-            android:layout_height="?attr/dropdownListPreferredItemHeight"
-            android:layout_margin="10dp"
-            android:background="@drawable/spinner_bg"
-            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-            android:dropDownWidth="150dp"
-            android:paddingRight="14dp"
-            android:popupBackground="@color/colorPrimaryDark"
-            android:popupElevation="3dp"
-            android:stateListAnimator="@drawable/spinner_sla">
-
-        </productions.darthplagueis.imagesearch.util.CustomSpinner>
-
-        <productions.darthplagueis.imagesearch.util.CustomSpinner
-            android:id="@+id/spinner_order"
-            style="@style/Widget.AppCompat.Spinner"
-            android:layout_width="125dp"
-            android:layout_height="?attr/dropdownListPreferredItemHeight"
-            android:layout_margin="10dp"
-            android:background="@drawable/spinner_bg"
-            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-            android:dropDownWidth="150dp"
-            android:paddingRight="14dp"
-            android:popupBackground="@color/colorPrimaryDark"
-            android:popupElevation="3dp"
-            android:stateListAnimator="@drawable/spinner_sla">
-
-        </productions.darthplagueis.imagesearch.util.CustomSpinner>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/adv_search_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="80dp"
-        android:layout_marginStart="80dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="@string/search"
-        android:textColor="@color/white" />
-
 
 </LinearLayout>

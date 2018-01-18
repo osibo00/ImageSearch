@@ -1,12 +1,10 @@
 package productions.darthplagueis.imagesearch.fragment;
 
-import android.support.v7.widget.GridLayoutManager;
-
 /**
- * Created by oleg on 1/13/18.
+ * Created by oleg on 1/17/18.
  */
 
-public interface FragmentListener {
+public interface SearchFragListener {
 
     void inflateLoadingFragment(String title);
 
@@ -23,6 +21,4 @@ public interface FragmentListener {
     void defineEditorChoice(String editor);
 
     void defineOrder(String order);
-
-    void getLayoutManager(GridLayoutManager layoutManager);
 }
