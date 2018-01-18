@@ -21,17 +21,14 @@ public class InsetDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        outRect.left = insets;
         outRect.bottom = insets;
-
         // Adds top margins only for the top two childViews to avoid double space between items.
         if (parent.getChildLayoutPosition(view) == 0 || parent.getChildLayoutPosition(view) == 1) {
             outRect.top = insets;
         }
-
-        // Adds right margin to only the odd childViews since the odd ones are placed on the right.
+        // Adds right margin to only the even childViews since the even ones are placed on the left.
         // This prevents double spacing in between the left and right childView.
-        if (parent.getChildLayoutPosition(view) % 2 == 1) {
+        if (parent.getChildLayoutPosition(view) % 2 == 0) {
             outRect.right = insets;
         }
     }

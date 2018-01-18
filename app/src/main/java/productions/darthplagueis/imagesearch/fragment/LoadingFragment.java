@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import productions.darthplagueis.imagesearch.MainActivity;
 import productions.darthplagueis.imagesearch.R;
 
 
@@ -22,7 +21,6 @@ public class LoadingFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_loading, container, false);
 
-        ((AppCompatActivity) getActivity()).setSupportActionBar(MainActivity.getToolbar());
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 

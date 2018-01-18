@@ -4,8 +4,6 @@ package productions.darthplagueis.imagesearch.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
-import productions.darthplagueis.imagesearch.MainActivity;
 import productions.darthplagueis.imagesearch.R;
 import productions.darthplagueis.imagesearch.util.CustomSpinner;
 
 
 public class AdvancedSearchFragment extends Fragment {
 
-    FragmentListener listener;
+    SearchFragListener listener;
     private final String TAG = "Advanced Search";
     private EditText advQueryText;
     private Button advSearchBtn;
@@ -42,10 +39,6 @@ public class AdvancedSearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_advanced_search, container, false);
-
-        ((AppCompatActivity) getActivity()).setSupportActionBar(MainActivity.getToolbar());
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
 
         advQueryText = rootView.findViewById(R.id.adv_query_text);
         advSearchBtn = rootView.findViewById(R.id.adv_search_btn);
@@ -69,7 +62,7 @@ public class AdvancedSearchFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            listener = (FragmentListener) context;
+            listener = (SearchFragListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement FragmentListener");
         }
@@ -95,7 +88,7 @@ public class AdvancedSearchFragment extends Fragment {
     }
 
     private void setCategorySpinner() {
-        String[] data = {"Category", "Nature", "science", "Places", "Food", "People"};
+        String[] data = {"Category", "Nature", "Science", "Places", "Food", "People"};
 
         ArrayAdapter adapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item_selected, data);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
