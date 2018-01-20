@@ -38,6 +38,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+            toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+            toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
         }
     }
 

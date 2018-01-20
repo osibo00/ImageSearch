@@ -14,9 +14,6 @@ public interface PixabayGetter {
     String searchEndPoint = "api/";
 
     @GET(searchEndPoint)
-    Call<PhotoResults> getPhotoResults(@Query("key") String apiKey, @Query("q") String query, @Query("image_type") String imageType);
-
-    @GET(searchEndPoint)
     Call<PhotoResults> getMoreResults(@Query("key") String apiKey, @Query("q") String query, @Query("image_type") String imageType, @Query("page") int page, @Query("per_page") int perPage);
 
     @GET(searchEndPoint)

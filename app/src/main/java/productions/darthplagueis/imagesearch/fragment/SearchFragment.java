@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import productions.darthplagueis.imagesearch.R;
+import productions.darthplagueis.imagesearch.fragment.fragmentlisteners.SearchFragListener;
 import productions.darthplagueis.imagesearch.util.CustomSpinner;
 
 

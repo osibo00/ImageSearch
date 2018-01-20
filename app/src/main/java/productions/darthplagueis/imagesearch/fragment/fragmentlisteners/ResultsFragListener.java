@@ -1,4 +1,4 @@
-package productions.darthplagueis.imagesearch.fragment;
+package productions.darthplagueis.imagesearch.fragment.fragmentlisteners;
 
 import android.support.v7.widget.GridLayoutManager;
 

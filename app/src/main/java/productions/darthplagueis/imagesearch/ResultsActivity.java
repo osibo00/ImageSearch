@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 import java.util.List;
 
 import productions.darthplagueis.imagesearch.fragment.PhotoHitsFragment;
-import productions.darthplagueis.imagesearch.fragment.ResultsFragListener;
+import productions.darthplagueis.imagesearch.fragment.fragmentlisteners.ResultsFragListener;
 import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoHits;
 import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoResults;
 import productions.darthplagueis.imagesearch.util.Constants;
@@ -41,7 +41,8 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
         Log.d(TAG, "onCreate: " + searchStrings[0] + " " + searchStrings[1] + " " + searchStrings[2]);
         try {
             Log.d(TAG, "onCreate: " + searchStrings[3] + " " + searchStrings[4]);
-        } catch (IndexOutOfBoundsException e) {}
+        } catch (IndexOutOfBoundsException e) {
+        }
 
         inflateResultsFragment();
     }
@@ -49,8 +50,7 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
     @Override
     public void onResume() {
         super.onResume();
-        toolbar.setTitle("You Searched For");
-        toolbar.setSubtitle(searchStrings[0]);
+        setResultTitles();
         loadMore = true;
         pageNumber = 2;
     }
@@ -72,6 +72,17 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
     }
 
     @Override
+    public void onBackPressed() {
+        int count = fragmentManager.getBackStackEntryCount();
+        if (count == 0) {
+            super.onBackPressed();
+        } else {
+            setResultTitles();
+            fragmentManager.popBackStack();
+        }
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
@@ -79,6 +90,11 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
 
     public static RecyclerView.OnScrollListener getScrollListener() {
         return scrollListener;
+    }
+
+    private void setResultTitles() {
+        toolbar.setTitle("You Searched For");
+        toolbar.setSubtitle(searchStrings[0]);
     }
 
     private void getIntentExtras() {
@@ -95,7 +111,7 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         PhotoHitsFragment fragment = (PhotoHitsFragment) fragmentManager.findFragmentByTag("hitsFrag");
         if (fragment == null) {
-            transaction.replace(R.id.results_fragment_container, new PhotoHitsFragment(), "hitsFrag");
+            transaction.add(R.id.results_fragment_container, new PhotoHitsFragment(), "hitsFrag");
         } else {
             transaction.replace(R.id.results_fragment_container, fragment, "hitsFrag");
         }

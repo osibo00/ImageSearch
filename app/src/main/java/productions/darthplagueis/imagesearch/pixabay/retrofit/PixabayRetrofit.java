@@ -14,8 +14,9 @@ public class PixabayRetrofit {
     private static PixabayRetrofit instanceOfRetrofit;
 
     private PixabayRetrofit() {
+        String pixabayBaseUrl = "https://pixabay.com/";
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://pixabay.com/")
+                .baseUrl(pixabayBaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

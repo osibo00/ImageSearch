@@ -4,10 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.support.v7.widget.AppCompatSpinner;
 
-/**
- * Created by oleg on 1/15/18.
- */
-
 public class CustomSpinner extends AppCompatSpinner {
 
     private static final String TAG = "CustomSpinner";

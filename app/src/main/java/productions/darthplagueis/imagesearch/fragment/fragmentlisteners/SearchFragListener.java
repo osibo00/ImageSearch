@@ -1,4 +1,4 @@
-package productions.darthplagueis.imagesearch.fragment;
+package productions.darthplagueis.imagesearch.fragment.fragmentlisteners;
 
 /**
  * Created by oleg on 1/17/18.

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import productions.darthplagueis.imagesearch.R;
 import productions.darthplagueis.imagesearch.ResultsActivity;
 import productions.darthplagueis.imagesearch.controller.PhotoHitsAdapter;
+import productions.darthplagueis.imagesearch.fragment.fragmentlisteners.ResultsFragListener;
 import productions.darthplagueis.imagesearch.util.InsetDecoration;
 
 
