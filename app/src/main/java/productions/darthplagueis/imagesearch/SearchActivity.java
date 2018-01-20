@@ -9,7 +9,7 @@ import java.util.List;
 
 import productions.darthplagueis.imagesearch.fragment.AdvancedSearchFragment;
 import productions.darthplagueis.imagesearch.fragment.LoadingFragment;
-import productions.darthplagueis.imagesearch.fragment.SearchFragListener;
+import productions.darthplagueis.imagesearch.fragment.fragmentlisteners.SearchFragListener;
 import productions.darthplagueis.imagesearch.fragment.SearchFragment;
 import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoHits;
 import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoResults;
@@ -158,7 +158,7 @@ public class SearchActivity extends BaseActivity implements SearchFragListener {
     }
 
     private void getResults() {
-        Call<PhotoResults> call = pixabayGetter.getPhotoResults(API_KEY, queryString, imageTypeString);
+        Call<PhotoResults> call = pixabayGetter.getMoreResults(API_KEY, queryString, imageTypeString, 1, 20);
         call.enqueue(new Callback<PhotoResults>() {
             @Override
             public void onResponse(Call<PhotoResults> call, Response<PhotoResults> response) {

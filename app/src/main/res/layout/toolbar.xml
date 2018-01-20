@@ -5,15 +5,12 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
+        style="@style/MyToolbar"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary"
-        android:elevation="10dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        android:elevation="10dp">
 
     </android.support.v7.widget.Toolbar>
 

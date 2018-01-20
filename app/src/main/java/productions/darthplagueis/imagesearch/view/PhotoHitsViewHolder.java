@@ -3,10 +3,11 @@ package productions.darthplagueis.imagesearch.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +20,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
 import productions.darthplagueis.imagesearch.R;
+import productions.darthplagueis.imagesearch.ResultsActivity;
+import productions.darthplagueis.imagesearch.fragment.FullScreenFragment;
 import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoHits;
+import productions.darthplagueis.imagesearch.util.Constants;
 
 /**
  * Created by oleg on 1/11/18.
@@ -38,7 +42,12 @@ public class PhotoHitsViewHolder extends RecyclerView.ViewHolder {
         layout = itemView.findViewById(R.id.image_view_parent);
     }
 
-    public void onBind(PhotoHits hits) {
+    public void onBind(final PhotoHits hits) {
+        setImages(hits);
+        setOnClick(hits);
+    }
+
+    private void setImages(PhotoHits hits) {
         Glide.with(context)
                 .asBitmap()
                 .load(hits.getPreviewURL())
@@ -72,4 +81,22 @@ public class PhotoHitsViewHolder extends RecyclerView.ViewHolder {
                 })
                 .into(imageView);
     }
+
+    private void setOnClick(final PhotoHits hits) {
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] strings = new String[]{hits.getWebformatURL(), hits.getTags(), hits.getType()};
+                Bundle bundle = new Bundle();
+                bundle.putStringArray(Constants.IMAGE_STRINGS, strings);
+                FullScreenFragment fragment = new FullScreenFragment();
+                FragmentTransaction transaction = ((ResultsActivity) context).getSupportFragmentManager().beginTransaction();
+                fragment.setArguments(bundle);
+                transaction.add(R.id.results_fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+    }
+
 }

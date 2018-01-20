@@ -13,4 +13,11 @@
         <item name="android:minWidth">200dp</item>
     </style>
 
+    <style name="MyToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+    </style>
+
 </resources>
