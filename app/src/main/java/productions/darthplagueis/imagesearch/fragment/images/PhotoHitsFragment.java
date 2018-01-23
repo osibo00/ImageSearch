@@ -1,4 +1,4 @@
-package productions.darthplagueis.imagesearch.fragment;
+package productions.darthplagueis.imagesearch.fragment.images;
 
 
 import android.content.Context;
@@ -11,30 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import productions.darthplagueis.imagesearch.ImagesActivity;
 import productions.darthplagueis.imagesearch.R;
-import productions.darthplagueis.imagesearch.ResultsActivity;
 import productions.darthplagueis.imagesearch.controller.PhotoHitsAdapter;
-import productions.darthplagueis.imagesearch.fragment.fragmentlisteners.ResultsFragListener;
 import productions.darthplagueis.imagesearch.util.InsetDecoration;
+import productions.darthplagueis.imagesearch.util.PixabayDataProvider;
 
 
 public class PhotoHitsFragment extends Fragment {
 
-    ResultsFragListener listener;
+    private ResultsFragListener listener;
     private final String TAG = "Photo Hits Fragment";
+    private PhotoHitsAdapter adapter;
+    private PixabayDataProvider dataProvider;
 
     public PhotoHitsFragment() {
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        try {
-            listener = (ResultsFragListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement FragListener");
-        }
     }
 
     @Override
@@ -47,17 +38,45 @@ public class PhotoHitsFragment extends Fragment {
 
         RecyclerView recyclerView = rootView.findViewById(R.id.recycler_view);
 
-        PhotoHitsAdapter adapter = PhotoHitsAdapter.getInstanceOfAdapter();
+        adapter = new PhotoHitsAdapter();
+        dataProvider = PixabayDataProvider.getInstanceOfPDP();
+        adapter.createList(dataProvider.getPhotoHitsList());
         recyclerView.setAdapter(adapter);
 
         GridLayoutManager layoutManager = new GridLayoutManager(rootView.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.addItemDecoration(new InsetDecoration(rootView.getContext()));
+        recyclerView.addItemDecoration(new InsetDecoration(rootView.getContext(), false));
 
         listener.setScrollListener(layoutManager);
-        recyclerView.addOnScrollListener(ResultsActivity.getScrollListener());
+        recyclerView.addOnScrollListener(ImagesActivity.getScrollListener());
 
         return rootView;
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ResultsFragListener) {
+            listener = (ResultsFragListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
+
+    public void updateAdapter() {
+        adapter.updateList(dataProvider.getPhotoHitsList());
+    }
+
+    public interface ResultsFragListener{
+        void setScrollListener(GridLayoutManager layoutManager);
+    }
+
 }

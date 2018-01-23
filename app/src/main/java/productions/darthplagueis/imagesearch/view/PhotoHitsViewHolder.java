@@ -20,9 +20,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
 import productions.darthplagueis.imagesearch.R;
-import productions.darthplagueis.imagesearch.ResultsActivity;
-import productions.darthplagueis.imagesearch.fragment.FullScreenFragment;
-import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoHits;
+import productions.darthplagueis.imagesearch.ImagesActivity;
+import productions.darthplagueis.imagesearch.fragment.images.FullScreenFragment;
+import productions.darthplagueis.imagesearch.pixabay.retrofit.model.images.PhotoHits;
 import productions.darthplagueis.imagesearch.util.Constants;
 
 /**
@@ -90,13 +90,12 @@ public class PhotoHitsViewHolder extends RecyclerView.ViewHolder {
                 Bundle bundle = new Bundle();
                 bundle.putStringArray(Constants.IMAGE_STRINGS, strings);
                 FullScreenFragment fragment = new FullScreenFragment();
-                FragmentTransaction transaction = ((ResultsActivity) context).getSupportFragmentManager().beginTransaction();
+                FragmentTransaction transaction = ((ImagesActivity) context).getSupportFragmentManager().beginTransaction();
                 fragment.setArguments(bundle);
-                transaction.add(R.id.results_fragment_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                transaction.add(R.id.results_fragment_container, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
     }
-
 }

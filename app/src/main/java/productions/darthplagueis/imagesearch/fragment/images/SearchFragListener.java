@@ -1,4 +1,4 @@
-package productions.darthplagueis.imagesearch.fragment.fragmentlisteners;
+package productions.darthplagueis.imagesearch.fragment.images;
 
 /**
  * Created by oleg on 1/17/18.
@@ -6,9 +6,11 @@ package productions.darthplagueis.imagesearch.fragment.fragmentlisteners;
 
 public interface SearchFragListener {
 
-    void inflateLoadingFragment(String title);
+    void onSearchFragmentInteraction(String title);
 
     void inflateAdvSearchFragment();
+
+    void inflateVideoSearchFragment();
 
     void defineSimpleQuery(String query, String imageType);
 

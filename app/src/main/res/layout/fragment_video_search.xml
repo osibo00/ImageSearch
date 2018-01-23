@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey"
+    android:orientation="vertical"
+    tools:context="productions.darthplagueis.imagesearch.fragment.videos.VideoSearchFragment">
+
+    <EditText
+        android:id="@+id/video_query_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:hint="@string/search_videos"
+        android:padding="10dp"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/video_search_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorAccent"
+        android:text="@string/search"
+        android:textColor="@color/white" />
+
+</LinearLayout>

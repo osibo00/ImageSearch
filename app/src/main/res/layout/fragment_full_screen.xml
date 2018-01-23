@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_transparent"
-    tools:context="productions.darthplagueis.imagesearch.fragment.FullScreenFragment">
+    tools:context="productions.darthplagueis.imagesearch.fragment.images.FullScreenFragment">
 
     <ImageView
         android:id="@+id/full_screen_image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
 </FrameLayout>

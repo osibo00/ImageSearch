@@ -1,4 +1,4 @@
-package productions.darthplagueis.imagesearch.pixabay.retrofit.model;
+package productions.darthplagueis.imagesearch.pixabay.retrofit.model.images;
 
 /**
  * Created by oleg on 1/11/18.
