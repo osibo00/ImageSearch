@@ -6,3 +6,6 @@ After the repository is cloned, a gradle.properties file needs to created in the
 in project view. Alternatively you could add a gradle.properties file in the Gradle.Scripts folder when in Android view.
 It will need to contain one variable. API_KEY = "yourApiKeyHere" with API_KEY, written in this way. Then you should sync 
 the project With Gradle. 
+
+
+![alt text](https://thumbs.gfycat.com/WickedHarshHalibut-size_restricted.gif)
