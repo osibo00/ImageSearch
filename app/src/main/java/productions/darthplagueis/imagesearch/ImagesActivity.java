@@ -10,40 +10,31 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
-import productions.darthplagueis.imagesearch.fragment.PhotoHitsFragment;
-import productions.darthplagueis.imagesearch.fragment.fragmentlisteners.ResultsFragListener;
-import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoHits;
-import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoResults;
+import productions.darthplagueis.imagesearch.fragment.images.PhotoHitsFragment;
+import productions.darthplagueis.imagesearch.pixabay.retrofit.model.images.PhotoHits;
+import productions.darthplagueis.imagesearch.pixabay.retrofit.model.images.PhotoResults;
 import productions.darthplagueis.imagesearch.util.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ResultsActivity extends BaseActivity implements ResultsFragListener {
+public class ImagesActivity extends BaseActivity implements PhotoHitsFragment.ResultsFragListener {
 
-    private final String TAG = "ResultsActivity";
+    private final String TAG = "ImagesActivity";
     private static RecyclerView.OnScrollListener scrollListener;
     private ProgressBar progressBar;
     private String[] searchStrings;
+    private PhotoHitsFragment fragment;
     private boolean isAdvSearch;
     private boolean advEditor;
     private boolean loadMore;
     private int pageNumber;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        progressBar = findViewById(R.id.results_progressbar);
-
+        progressBar = findViewById(R.id.images_progressbar);
         getIntentExtras();
-
-        Log.d(TAG, "onCreate: " + searchStrings[0] + " " + searchStrings[1] + " " + searchStrings[2]);
-        try {
-            Log.d(TAG, "onCreate: " + searchStrings[3] + " " + searchStrings[4]);
-        } catch (IndexOutOfBoundsException e) {
-        }
-
         inflateResultsFragment();
     }
 
@@ -62,8 +53,14 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: " + "Called");
+    }
+
+    @Override
     protected int getLayoutResource() {
-        return R.layout.activity_results;
+        return R.layout.activity_images;
     }
 
     @Override
@@ -92,24 +89,30 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
         return scrollListener;
     }
 
+    private void getIntentExtras() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            searchStrings = extras.getStringArray(Constants.IMAGE_QUERY);
+            Log.d(TAG, "getIntentExtras: " + extras.getBoolean(Constants.SEARCH));
+            isAdvSearch = extras.getBoolean(Constants.SEARCH);
+            advEditor = extras.getBoolean(Constants.ADV_EDITOR);
+        }
+        Log.d(TAG, "onCreate: " + searchStrings[0] + " " + searchStrings[1] + " " + searchStrings[2]);
+        try {
+            Log.d(TAG, "onCreate: " + searchStrings[3] + " " + searchStrings[4]);
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setResultTitles() {
         toolbar.setTitle("You Searched For");
         toolbar.setSubtitle(searchStrings[0]);
     }
 
-    private void getIntentExtras() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            searchStrings = extras.getStringArray(Constants.QUERY_STRING);
-            Log.d(TAG, "getIntentExtras: " + extras.getBoolean(Constants.SEARCH));
-            isAdvSearch = extras.getBoolean(Constants.SEARCH);
-            advEditor = extras.getBoolean(Constants.ADV_EDITOR);
-        }
-    }
-
     private void inflateResultsFragment() {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        PhotoHitsFragment fragment = (PhotoHitsFragment) fragmentManager.findFragmentByTag("hitsFrag");
+        fragment = (PhotoHitsFragment) fragmentManager.findFragmentByTag("hitsFrag");
         if (fragment == null) {
             transaction.add(R.id.results_fragment_container, new PhotoHitsFragment(), "hitsFrag");
         } else {
@@ -150,7 +153,7 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
     }
 
     private void loadMoreResults() {
-        Call<PhotoResults> call = pixabayGetter.getMoreResults(API_KEY, searchStrings[1], searchStrings[2], pageNumber, 35);
+        Call<PhotoResults> call = pixabayGetter.getImageResults(API_KEY, searchStrings[1], searchStrings[2], pageNumber, 35);
         call.enqueue(new Callback<PhotoResults>() {
             @Override
             public void onResponse(Call<PhotoResults> call, Response<PhotoResults> response) {
@@ -158,7 +161,10 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
                 if (response.isSuccessful()) {
                     PhotoResults photoResults = response.body();
                     List<PhotoHits> photoHits = photoResults.getHits();
-                    adapter.updateList(photoHits);
+                    dataProvider.clearPhotoHits();
+                    dataProvider.updatePhotoHits(photoHits);
+                    fragment = (PhotoHitsFragment) fragmentManager.findFragmentByTag("hitsFrag");
+                    pushNewResultsToFrag();
                     pageNumber++;
                     Log.d(TAG, "onResponse more photoHits returned: " + photoHits.size());
                 }
@@ -175,7 +181,7 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
     }
 
     private void loadMoreAdvResults() {
-        Call<PhotoResults> call = pixabayGetter.getAdvResults(API_KEY, searchStrings[1], searchStrings[2], searchStrings[3], advEditor, searchStrings[4], pageNumber, 35);
+        Call<PhotoResults> call = pixabayGetter.getAdvImageResults(API_KEY, searchStrings[1], searchStrings[2], searchStrings[3], advEditor, searchStrings[4], pageNumber, 35);
         call.enqueue(new Callback<PhotoResults>() {
             @Override
             public void onResponse(Call<PhotoResults> call, Response<PhotoResults> response) {
@@ -183,7 +189,9 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
                 if (response.isSuccessful()) {
                     PhotoResults photoResults = response.body();
                     List<PhotoHits> photoHits = photoResults.getHits();
-                    adapter.updateList(photoHits);
+                    dataProvider.clearPhotoHits();
+                    dataProvider.updatePhotoHits(photoHits);
+                    pushNewResultsToFrag();
                     pageNumber++;
                     Log.d(TAG, "onResponse more photoHits returned: " + photoHits.size());
                 }
@@ -199,4 +207,10 @@ public class ResultsActivity extends BaseActivity implements ResultsFragListener
         });
     }
 
+    private void pushNewResultsToFrag() {
+        fragment = (PhotoHitsFragment) fragmentManager.findFragmentByTag("hitsFrag");
+        if (fragment != null) {
+            fragment.updateAdapter();
+        }
+    }
 }

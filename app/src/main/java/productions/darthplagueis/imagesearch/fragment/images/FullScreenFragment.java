@@ -1,4 +1,4 @@
-package productions.darthplagueis.imagesearch.fragment;
+package productions.darthplagueis.imagesearch.fragment.images;
 
 
 import android.graphics.Bitmap;

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import productions.darthplagueis.imagesearch.R;
-import productions.darthplagueis.imagesearch.pixabay.retrofit.model.PhotoHits;
+import productions.darthplagueis.imagesearch.pixabay.retrofit.model.images.PhotoHits;
+import productions.darthplagueis.imagesearch.util.PixabayDataProvider;
 import productions.darthplagueis.imagesearch.view.PhotoHitsViewHolder;
 
 /**
@@ -18,20 +19,10 @@ import productions.darthplagueis.imagesearch.view.PhotoHitsViewHolder;
 
 public class PhotoHitsAdapter extends RecyclerView.Adapter<PhotoHitsViewHolder> {
 
-    private static PhotoHitsAdapter instanceOfAdapter;
-
     private List<PhotoHits> photoHitsList;
 
-    private PhotoHitsAdapter() {
+    public PhotoHitsAdapter() {
         photoHitsList = new ArrayList<>();
-    }
-
-    public static PhotoHitsAdapter getInstanceOfAdapter() {
-        if (instanceOfAdapter != null) {
-            return instanceOfAdapter;
-        }
-        instanceOfAdapter = new PhotoHitsAdapter();
-        return instanceOfAdapter;
     }
 
     @Override
@@ -57,9 +48,5 @@ public class PhotoHitsAdapter extends RecyclerView.Adapter<PhotoHitsViewHolder> 
     public void updateList(List<PhotoHits> newList) {
         photoHitsList.addAll(newList);
         notifyItemRangeInserted(getItemCount(), photoHitsList.size() - 1);
-    }
-
-    public void clearList() {
-        photoHitsList.clear();
     }
 }

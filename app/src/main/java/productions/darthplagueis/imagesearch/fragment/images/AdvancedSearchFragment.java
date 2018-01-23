@@ -1,4 +1,4 @@
-package productions.darthplagueis.imagesearch.fragment;
+package productions.darthplagueis.imagesearch.fragment.images;
 
 
 import android.content.Context;
@@ -12,13 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import productions.darthplagueis.imagesearch.R;
-import productions.darthplagueis.imagesearch.fragment.fragmentlisteners.SearchFragListener;
+import productions.darthplagueis.imagesearch.fragment.images.SearchFragListener;
 import productions.darthplagueis.imagesearch.util.CustomSpinner;
 
 
 public class AdvancedSearchFragment extends Fragment {
 
-    SearchFragListener listener;
+    private SearchFragListener listener;
     private final String TAG = "Advanced Search";
     private EditText advQueryText;
     private Button advSearchBtn;
@@ -31,10 +31,8 @@ public class AdvancedSearchFragment extends Fragment {
     private String editorChoice;
     private String orderChoice;
 
-
     public AdvancedSearchFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,19 +52,24 @@ public class AdvancedSearchFragment extends Fragment {
         setOrderSpinner();
         setAdvSearchButton();
 
-
         return rootView;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        try {
+        if (context instanceof SearchFragListener) {
             listener = (SearchFragListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement FragmentListener");
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 
     private void setImageTypeSpinner() {
@@ -176,7 +179,7 @@ public class AdvancedSearchFragment extends Fragment {
                     listener.defineOrder(makeLowerCaseFirstLetter(orderChoice));
                 }
                 listener.defineAdvQuery(queryString);
-                listener.inflateLoadingFragment(capitalizeFirstLetter(searchString));
+                listener.onSearchFragmentInteraction(capitalizeFirstLetter(searchString));
             }
         });
     }

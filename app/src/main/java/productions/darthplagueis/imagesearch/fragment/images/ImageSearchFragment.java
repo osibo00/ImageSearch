@@ -1,7 +1,8 @@
-package productions.darthplagueis.imagesearch.fragment;
+package productions.darthplagueis.imagesearch.fragment.images;
 
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,15 +13,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import productions.darthplagueis.imagesearch.R;
-import productions.darthplagueis.imagesearch.fragment.fragmentlisteners.SearchFragListener;
 import productions.darthplagueis.imagesearch.util.CustomSpinner;
 
 
-public class SearchFragment extends Fragment {
+public class ImageSearchFragment extends Fragment {
 
-    SearchFragListener listener;
+    private SearchFragListener listener;
     private final String TAG = "Search Fragment";
     private EditText searchEditText;
     private CustomSpinner spinner;
@@ -29,22 +30,34 @@ public class SearchFragment extends Fragment {
     private String spinnerChoice;
     private String defaultType = "all";
 
-
-    public SearchFragment() {
+    public ImageSearchFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_image_search, container, false);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+
+        LinearLayout layout = rootView.findViewById(R.id.search_root_layout);
+        AnimationDrawable animationDrawable = (AnimationDrawable) layout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
 
         searchEditText = rootView.findViewById(R.id.query_text);
         spinner = rootView.findViewById(R.id.spinner);
         searchButton = rootView.findViewById(R.id.query_search_btn);
         advSearchFrag = rootView.findViewById(R.id.adv_search_frag);
+
+        rootView.findViewById(R.id.video_search_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.inflateVideoSearchFragment();
+            }
+        });
 
         setImageTypeSpinner();
         setSearchButton();
@@ -56,12 +69,18 @@ public class SearchFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        try {
+        if (context instanceof SearchFragListener) {
             listener = (SearchFragListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement FragListener");
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 
     private void setImageTypeSpinner() {
@@ -107,11 +126,11 @@ public class SearchFragment extends Fragment {
                 }
                 if (spinnerChoice != null) {
                     listener.defineSimpleQuery(queryString, makeLowerCaseFirstLetter(spinnerChoice));
-                    listener.inflateLoadingFragment(capitalizeFirstLetter(searchString));
+                    listener.onSearchFragmentInteraction(capitalizeFirstLetter(searchString));
                     Log.d(TAG, "onClick Search: " + queryString + " " + makeLowerCaseFirstLetter(spinnerChoice));
                 } else {
                     listener.defineSimpleQuery(queryString, defaultType);
-                    listener.inflateLoadingFragment(capitalizeFirstLetter(searchString));
+                    listener.onSearchFragmentInteraction(capitalizeFirstLetter(searchString));
                     Log.d(TAG, "onClick Search: " + queryString + " " + defaultType);
                 }
             }

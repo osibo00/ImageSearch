@@ -1,6 +1,8 @@
-package productions.darthplagueis.imagesearch.pixabay.retrofit.model;
+package productions.darthplagueis.imagesearch.pixabay.retrofit.model.images;
 
 import java.util.List;
+
+import productions.darthplagueis.imagesearch.pixabay.retrofit.model.images.PhotoHits;
 
 /**
  * Created by oleg on 1/11/18.

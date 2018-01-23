@@ -6,9 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import productions.darthplagueis.imagesearch.controller.PhotoHitsAdapter;
+import productions.darthplagueis.imagesearch.controller.VideoHitsAdapter;
 import productions.darthplagueis.imagesearch.pixabay.retrofit.PixabayGetter;
 import productions.darthplagueis.imagesearch.pixabay.retrofit.PixabayRetrofit;
+import productions.darthplagueis.imagesearch.util.PixabayDataProvider;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -16,7 +17,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     Toolbar toolbar;
     FragmentManager fragmentManager;
     PixabayGetter pixabayGetter;
-    PhotoHitsAdapter adapter;
+    PixabayDataProvider dataProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         configureToolbar();
         setFragmentManager();
         setRetrofit();
-        setAdapter();
+        initializeDataProvider();
     }
 
     protected abstract int getLayoutResource();
@@ -48,8 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         pixabayGetter = pixabayRetrofit.pixabayGetter();
     }
 
-    private void setAdapter() {
-        adapter = PhotoHitsAdapter.getInstanceOfAdapter();
+    private void initializeDataProvider() {
+        dataProvider = PixabayDataProvider.getInstanceOfPDP();
     }
-
 }
