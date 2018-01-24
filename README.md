@@ -1,5 +1,5 @@
 # ImageSearch
-This app uses the Pixabay API to search for and return images. 
+This app uses the Pixabay API to search for and return free images and videos. 
 The app requires an API key to work. It is really easy to get one, and it will only take a couple of minutes. 
 https://pixabay.com/api/docs/ 
 After the repository is cloned, a gradle.properties file needs to created in the Android Studio project folder when 
