@@ -8,6 +8,6 @@ It will need to contain one variable. API_KEY = "yourApiKeyHere" with API_KEY, w
 the project With Gradle. 
 
 
-![alt text](https://thumbs.gfycat.com/WickedHarshHalibut-size_restricted.gif) 
-![alt text](https://thumbs.gfycat.com/FixedDentalJaguar-size_restricted.gif)
 ![alt text](https://thumbs.gfycat.com/DeliciousVacantIberianbarbel-size_restricted.gif)
+![alt text](https://thumbs.gfycat.com/FixedDentalJaguar-size_restricted.gif)
+![alt text](https://thumbs.gfycat.com/WickedHarshHalibut-size_restricted.gif) 
